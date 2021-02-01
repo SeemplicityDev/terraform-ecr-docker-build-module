@@ -61,6 +61,7 @@ if [ "$destroy_task" == "no_downtime" ]; then
   for element in "${array[@]}"
   do
       aws ecs stop-task --cluster $ecs_cluster_name --task ${element}
+      aws ecs update-service --cluster $ecs_cluster_name  --service $ecs_service_name --force-new-deployment
   done
 else
   aws ecs update-service --cluster $ecs_cluster_name  --service $ecs_service_name --force-new-deployment
