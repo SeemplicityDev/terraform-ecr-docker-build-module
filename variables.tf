@@ -35,3 +35,8 @@ variable "additional_docker_flags"{
   description = "This is an additional flags for the docker build"
   default     = ""
 }
+variable "destroy_task" {
+  type        = string
+  description = "leave empty to use the aws method or write no_downtime to delete the old task definition"
+  default     = ""
+}
