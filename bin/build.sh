@@ -39,13 +39,7 @@ else
   docker build -t $aws_ecr_repository_url:$tag $build_folder $additional_docker_flags
 fi
 # Push image
-version=`echo "$(printf $(docker version --format {{.Server.Version}})'\n20.10.0'| sort -V)" | head -1`
-# This commad is to see if the docker version is smaller or bigger than 20.10.0
-if [ "$version" == "20.10.0" ]; then
-  docker push -a $aws_ecr_repository_url
-else
-  docker push $aws_ecr_repository_url
-fi
+docker push $aws_ecr_repository_url
 
 # Update the ecs service
 aws ecs update-service --cluster $ecs_cluster_name  --service $ecs_service_name --force-new-deployment
