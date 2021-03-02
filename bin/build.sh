@@ -43,11 +43,14 @@ echo "Building $aws_ecr_repository_url:$tag from $build_folder/Dockerfile"
 # Build image
 if [ "$additional_docker_tag" != "" ]; then
   docker build -t $aws_ecr_repository_url:$tag -t $aws_ecr_repository_url:$additional_docker_tag $build_folder $additional_docker_flags
+  # Push image
+  docker push $aws_ecr_repository_url:$tag
+  docker push $aws_ecr_repository_url:$additional_docker_tag
 else
   docker build -t $aws_ecr_repository_url:$tag $build_folder $additional_docker_flags
+  docker push $aws_ecr_repository_url:$tag
 fi
-# Push image
-docker push $aws_ecr_repository_url
+
 
 # Update the ecs service
 if [ "$destroy_task" == "no_downtime" ]; then
